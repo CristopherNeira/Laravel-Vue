@@ -29,7 +29,13 @@
         },
         methods: {
             newEvento(){
+                let evento = {
+                    id : '32',
+                    descripcion : this.descripcion,
+                    creado : '20/10/1959'
+                };
                 alert(this.descripcion);
+                this.$emit('new',evento);
             }
 
         }

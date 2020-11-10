@@ -22,12 +22,7 @@
         props:['evento'],
         data() {
             return{
-                eventos:[{
-                    'id': '',
-                    'descripcion': '',
-                    'creado': ''
-                }]
-            }
+            };
         },
         mounted() {
             console.log('Component mounted.')

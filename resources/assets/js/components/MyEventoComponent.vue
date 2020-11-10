@@ -2,7 +2,7 @@
     <div class="row">
             <div class="col-md-8 col-md-offset-2">
             
-                <form-evento-component></form-evento-component>
+                <form-evento-component @new = "addEvento"></form-evento-component>
                 <evento-component
                     v-for="evento in eventos"
                     :key="evento.id"
@@ -28,6 +28,11 @@
         },
         mounted() {
             console.log('Component mounted.')
+        }, 
+        methods : {
+            addEvento(evento){
+                this.eventos.push(evento);
+            }
         }
     }
 </script>

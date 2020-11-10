@@ -45028,6 +45028,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         console.log('Component mounted.');
+    },
+
+    methods: {
+        addEvento: function addEvento(evento) {
+            this.eventos.push(evento);
+        }
     }
 });
 
@@ -45044,7 +45050,7 @@ var render = function() {
       "div",
       { staticClass: "col-md-8 col-md-offset-2" },
       [
-        _c("form-evento-component"),
+        _c("form-evento-component", { on: { new: _vm.addEvento } }),
         _vm._v(" "),
         _vm._l(_vm.eventos, function(evento) {
           return _c("evento-component", {
@@ -45152,7 +45158,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         newEvento: function newEvento() {
+            var evento = {
+                id: '32',
+                descripcion: this.descripcion,
+                creado: '20/10/1959'
+            };
             alert(this.descripcion);
+            this.$emit('new', evento);
         }
     }
 });
@@ -45311,13 +45323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['evento'],
     data: function data() {
-        return {
-            eventos: [{
-                'id': '',
-                'descripcion': '',
-                'creado': ''
-            }]
-        };
+        return {};
     },
     mounted: function mounted() {
         console.log('Component mounted.');
