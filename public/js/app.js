@@ -45013,6 +45013,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['evento'],
@@ -45033,6 +45035,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         addEvento: function addEvento(evento) {
             this.eventos.push(evento);
+        },
+        deleteEvento: function deleteEvento(index) {
+            this.eventos.splice(index, 1);
+        },
+        updateEvento: function updateEvento(index, evento) {
+            this.evento[index] = evento;
         }
     }
 });
@@ -45052,10 +45060,21 @@ var render = function() {
       [
         _c("form-evento-component", { on: { new: _vm.addEvento } }),
         _vm._v(" "),
-        _vm._l(_vm.eventos, function(evento) {
+        _vm._l(_vm.eventos, function(evento, index) {
           return _c("evento-component", {
             key: evento.id,
-            attrs: { evento: evento }
+            attrs: { evento: evento },
+            on: {
+              update: function($event) {
+                var i = arguments.length,
+                  argsArray = Array(i)
+                while (i--) argsArray[i] = arguments[i]
+                return _vm.updateEvento.apply(void 0, [index].concat(argsArray))
+              },
+              delete: function($event) {
+                return _vm.deleteEvento(index)
+              }
+            }
           })
         })
       ],
@@ -45165,6 +45184,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             };
             alert(this.descripcion);
             this.$emit('new', evento);
+            this.descripcion = '';
         }
     }
 });
@@ -45319,14 +45339,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['evento'],
     data: function data() {
-        return {};
+        return {
+            editMode: false
+        };
     },
     mounted: function mounted() {
         console.log('Component mounted.');
+    },
+
+    methods: {
+        onClickDelete: function onClickDelete() {
+            this.$emit('delete');
+        },
+        onClickEdit: function onClickEdit() {
+            this.editMode = true;
+        },
+        onClickUpdate: function onClickUpdate() {
+            this.editMode = false;
+            this.$emit('update', evento);
+        }
     }
 });
 
@@ -45344,28 +45385,78 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "panel-body" }, [
-      _c("p", [_vm._v(" " + _vm._s(_vm.evento.descripcion))])
+      _vm.editMode
+        ? _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.evento.descripcion,
+                expression: "evento.descripcion"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text" },
+            domProps: { value: _vm.evento.descripcion },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.evento, "descripcion", $event.target.value)
+              }
+            }
+          })
+        : _c("p", [_vm._v(" " + _vm._s(_vm.evento.descripcion))])
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "panel-footer" }, [
+      _vm.editMode
+        ? _c(
+            "button",
+            {
+              staticClass: "btn btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.onClickUpdate()
+                }
+              }
+            },
+            [
+              _vm._v(
+                "\n                        Guardar Cambios\n                    "
+              )
+            ]
+          )
+        : _c(
+            "button",
+            {
+              staticClass: "btn btn-default",
+              on: {
+                click: function($event) {
+                  return _vm.onClickEdit()
+                }
+              }
+            },
+            [_vm._v("\n                        Editar\n                    ")]
+          ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-danger",
+          on: {
+            click: function($event) {
+              return _vm.onClickDelete()
+            }
+          }
+        },
+        [_vm._v("\n                        Eliminar\n                    ")]
+      )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-footer" }, [
-      _c("button", { staticClass: "btn btn-default" }, [
-        _vm._v("\n                        Editar\n                    ")
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-danger" }, [
-        _vm._v("\n                        Eliminar\n                    ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

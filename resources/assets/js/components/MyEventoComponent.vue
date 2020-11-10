@@ -4,9 +4,11 @@
             
                 <form-evento-component @new = "addEvento"></form-evento-component>
                 <evento-component
-                    v-for="evento in eventos"
+                    v-for="(evento, index) in eventos"
                     :key="evento.id"
-                    :evento="evento">
+                    :evento="evento"
+                    @update="updateEvento(index, ... arguments)"
+                    @delete="deleteEvento(index)">
                 </evento-component>
                     
             </div>
@@ -32,6 +34,12 @@
         methods : {
             addEvento(evento){
                 this.eventos.push(evento);
+            },
+            deleteEvento(index){
+                this.eventos.splice(index,1);
+            },
+            updateEvento(index, evento){
+                this.evento[index] = evento;
             }
         }
     }

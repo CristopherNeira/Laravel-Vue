@@ -36,6 +36,7 @@
                 };
                 alert(this.descripcion);
                 this.$emit('new',evento);
+                this.descripcion = '';
             }
 
         }
